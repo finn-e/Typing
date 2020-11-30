@@ -419,9 +419,9 @@ int printPercentages(Keyboard *k)
 
 	// Hand
 	printf("\nHands: ");
-	printf("%lld%% ", 100 * (k->fingerUsage[0] + k->fingerUsage[1] + 
+	printf("%ld%% ", 100 * (k->fingerUsage[0] + k->fingerUsage[1] + 
 			k->fingerUsage[2] + k->fingerUsage[3] + k->fingerUsage[4]) / total);
-	printf("%lld%%\n", 100 * (k->fingerUsage[5] + 
+	printf("%ld%%\n", 100 * (k->fingerUsage[5] + 
 			k->fingerUsage[6] + k->fingerUsage[7] + k->fingerUsage[8]
 			 + k->fingerUsage[9]) / total);
 
@@ -439,10 +439,10 @@ int printPercentages(Keyboard *k)
 	printLayoutOnly(k);
 		
 	// Print all the fitness criteria.
-	printf("Fitness:       %lld\n",   k->fitness);
+	printf("Fitness:       %ld\n",   k->fitness);
 	if (keepQWERTY) printf("QWERTY positions: %d\n", qwertyPositions(k));
-	printf("Distance:      %lld\n",   (        (    k->distance  )           ));
-	printf("Finger work:   %lld\n",   (        (    k->fingerWork)           ));
+	printf("Distance:      %ld\n",   (        (    k->distance  )           ));
+	printf("Finger work:   %ld\n",   (        (    k->fingerWork)           ));
 	printf("Inward rolls:  %.2f%%\n", ((double)(100*k->inRoll    ) / totalDi ));
 	printf("Outward rolls: %.2f%%\n", ((double)(100*k->outRoll   ) / totalDi ));
 	printf("Same hand:     %.2f%%\n", ((double)(100*k->sameHand  ) / totalDi ));

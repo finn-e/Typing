@@ -43,7 +43,7 @@ int initData()
 	nilKeyboard.toCenter = 0;
 	nilKeyboard.toOutside = 0;
     
-    strncpy(qwerty, "qwertyuiopasdfghjkl;zxcvbnm,./", 30);
+    strncpy(qwerty, "qwertyuiopasdfghjkl;zxcvbnm,./", 31);
 	
 	for (i = 0; i < 5; ++i)
 		for (j = 0; j < 5; ++j) {
@@ -384,10 +384,10 @@ int initTypingData()
 	diLen = i;
 	fclose(file);
     
-    if (diLen == 0)
+    if (diLen == 0) {
         fprintf(stderr, "Warning: In file %s, no digraphs found.\n",
                 DIGRAPH_FILE);
-	
+    }
 
 	file = fopen(MONOGRAPHFILE, "r");
 	CHECK_FILE_FOR_NULL(file, MONOGRAPHFILE);
@@ -435,9 +435,10 @@ int initTypingData()
 	monLen = i;
 	fclose(file);
     
-    if (monLen == 0)
+    if (monLen == 0) {
         fprintf(stderr, "Warning: In file %s, no monographs found.\n",
                 MONOGRAPHFILE);
+    }
 	
 	/* If necessary, add the stats for backspace. */
 	if (strchr(keysToInclude, '\b')) {
@@ -567,7 +568,7 @@ int compileTypingData(char *outfileName, const char *filenames[],
 	
 	for (i = 0; i < dataLen && i < max; ++i) {
 		strncpy(line, ngraphs[i].key, unit);
-		sprintf(line + unit, " %lld\n", ngraphs[i].value);
+		sprintf(line + unit, " %ld\n", ngraphs[i].value);
 		
 		fputs(line, outfile);
 		free(ngraphs[i].key);
