@@ -66,6 +66,11 @@ struct Digraph digraphs[DI_LEN_MAX];
 #define DEFAULT_KEYBOARD_30 "qwertyuiopasdfghjkl;zxcvbnm,./QWERTYUIOPASDFGHJKL:ZXCVBNM<>?"
 #define DEFAULT_KEYBOARD_STANDARD "`1234567890-=qwertyuiop[]\\asdfghjkl;'zxcvbnm,./~!@#$%^&*()_+QWERTYUIOP{}|ASDFGHJKL:\"ZXCVBNM<>?"
 #define DEFAULT_KEYBOARD_KINESIS "1234567890-\tqwertyuiop=asdfghjkl;'zxcvbnm,./`\\[]\n !@#$%^&*()_\tQWERTYUIOP+ASDFGHJKL:\"ZXCVBNM<>?~|{}\n "
+#define DEFAULT_KEYBOARD_LAPTOP "`1234567890-=qwertyuiop[]\\asdfghjkl;'zxcvbnm,./ \b~!@#$%^&*()_+QWERTYUIOP{}|ASDFGHJKL:\"ZXCVBNM<>? \b"
+#define DEFAULT_KEYBOARD_NOT "qcumkxfgpwetaozinjsrh y,.'bv\"-ldQCUMKXFGPWETAOZINJSRH Y:!?BV;/LD"
+#define DEFAULT_KEYBOARD_NOTT "qcumk/dxfgpwetaozinjsrh y,.'bv\"lQCUMK-DXFGPWETAOZINJSRH Y:!?BV;L"
+#define DEFAULT_KEYBOARD_CRKBD "q``mkldxfgpwetaozinjsrh y,.'bcuv\"-)lQ``MKLDXFGPWETAOZINJSRH Y:!?BCUV;/)L"
+#define DEFAULT_KEYBOARD_ADHD " etaoinsrhldcumfgpwybvkxjqz ETAOINSRHLDCUMFGPWYBVKXJQZ"
 
 #define CHECK_FILE_FOR_NULL(file, filename) \
 	if ((file) == NULL) { \

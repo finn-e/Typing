@@ -66,7 +66,69 @@ int initValues()
 		for (i = 0; i < ksize; ++i)
 			distanceCosts[i] = costsCopy[i];
 		
-	}
+	} else if (fullKeyboard == K_LAPTOP) {
+		
+		// These costs are optimized for a full standard layout. Any cost that 
+		// is 999 is not supposed to contain any character.
+		static int64_t costsCopy[KSIZE_MAX] = {
+			110, 100,  90,  75, 100, 120, 160, 100,  75,  90, 100, 110, 120, 999,
+			999,  40,  40,  30,  40,  70,  80,  40,  30,  40,  40,  60,  90, 140, 
+			999,   0,   0,   0,   0,  30,  30,   0,   0,   0,   0,  50, 999, 999, 
+			999,  70,  70,  70,  50,  95,  60,  40,  60,  70,  70, 999, 999, 999, 
+			999, 999, 999, 999,   0,  20,  20,   0, 999, 999, 999, 999, 999, 999, 
+		};
+		for (i = 0; i < ksize; ++i)
+			distanceCosts[i] = costsCopy[i];
+			
+	} else if (fullKeyboard == K_CRKBD) {
+		
+		// These costs are optimized for Kinesis. Any cost that is 999 is not 
+		// supposed to contain any character.
+		static int64_t costsCopy[KSIZE_MAX] = {
+			 40,  40,  30,  40,  80,  20,  20,  80,  40,  30,  40,  60, 
+			  0,   0,   0,   0,  50,   0,   0,  50,   0,   0,   0,   0, 
+			 90,  70,  40,  30,  90,  20,  20,  90,  30,  40,  70,  90, 
+		};
+		for (i = 0; i < ksize; ++i)
+			distanceCosts[i] = costsCopy[i];
+		
+	} else if (fullKeyboard == K_NOT) {
+		// Set keyboard position costs. These costs were determined by looking 
+		// at how the positions were valued on some of the best alternative 
+		// layouts.
+		static int64_t costsCopy[KSIZE_MAX] = {
+			 40,  40,  30,  40,  80, 999, 999,  80,  40,  30,  40,  60, 
+			  0,   0,   0,   0,  50,   0,   0,  50,   0,   0,   0,   0, 
+			 90,  70,  40,  30,  90, 999, 999,  90,  30,  40,  70,  90, 
+		};
+	
+		for (i = 0; i < ksize; ++i)
+			distanceCosts[i] = costsCopy[i];
+    } else if (fullKeyboard == K_NOTT) {
+		// Set keyboard position costs. These costs were determined by looking 
+		// at how the positions were valued on some of the best alternative 
+		// layouts.
+		static int64_t costsCopy[KSIZE_MAX] = {
+			 40,  40,  30,  40,  80,  20,  20,  80,  40,  30,  40,  60, 
+			  0,   0,   0,   0,  50,   0,   0,  50,   0,   0,   0,   0, 
+			 90,  70,  40,  30,  90, 999, 999,  90,  30,  40,  70,  90, 
+		};
+	
+		for (i = 0; i < ksize; ++i)
+			distanceCosts[i] = costsCopy[i];
+    } else if (fullKeyboard == K_ADHD) {
+		// Set keyboard position costs. These costs were determined by looking 
+		// at how the positions were valued on some of the best alternative 
+		// layouts.
+		static int64_t costsCopy[KSIZE_MAX] = {
+			 40,  40,  30,  40,  20,  20,  40,  30,  40,  60, 
+			  0,   0,   0,   0,   0,   0,   0,   0,   0,   0, 
+			 90,  70,  40,  30, 999, 999,  30,  40,  70,  90, 
+		};
+	
+		for (i = 0; i < ksize; ++i)
+			distanceCosts[i] = costsCopy[i];
+    }
 
 	// Based on distance from the ctrl key and how much of a stretch it is.
 	shortcutCosts[ 0] =  0; shortcutCosts[ 1] =  0; shortcutCosts[ 2] =  1; shortcutCosts[ 3] =  3; shortcutCosts[ 4] =  4; 
@@ -130,24 +192,27 @@ void initCosts()
 	 * on the index finger. The cost is 
      *     sameHand + rowChange + homeJump + homeJumpIndex.
      */
+    sfmult = 10;
+    irmult = 3;
+    
 	distance =		  1;
-	inRoll =		-40;
-	outRoll =		  5;
+	inRoll =		-40*irmult;
+	outRoll =		  -5;
 	sameHand =		  5;
-	sameFingerP =	150;
-	sameFingerR =	140;
-	sameFingerM =	110;
-	sameFingerI =	 90;
-	sameFingerT =	100;
-	rowChangeDown =  10;
-	rowChangeUp =    15;
+	sameFingerP =	150*sfmult;
+	sameFingerR =	140*sfmult;
+	sameFingerM =	110*sfmult;
+	sameFingerI =	 90*sfmult;
+	sameFingerT =	100*sfmult;
+	rowChangeDown =  0;
+	rowChangeUp =    0;
 	handWarp =		 25;
 	handSmooth =	- 5;
-	homeJump =		100;
-	homeJumpIndex = -90;
-	doubleJump =	220; /* Does not compound with homeJump. */
-	ringJump =       40;
-	toCenter =		 30;
+	homeJump =		0;
+	homeJumpIndex = 0;
+	doubleJump =	0; /* Does not compound with homeJump. */
+	ringJump =       0;
+	toCenter =		 100;
 	toOutside =		 30;
 	
 	shiftCost =		100;

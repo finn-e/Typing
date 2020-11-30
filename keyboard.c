@@ -9,6 +9,12 @@
 #include "keyboard.h"
 
 int legalBox[] = {
+	3, 1, 1, 1, 1, 2, 2, 1, 1, 1, 1, 1,  
+	2, 2, 2, 2, 1, 2, 2, 1, 2, 2, 2, 2,
+	1, 1, 1, 1, 1, 2, 2, 1, 1, 1, 1, 1,
+};
+
+int legalBox3[] = {
 	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
 	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
 	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
@@ -20,12 +26,12 @@ int legalBox2[] = {
 	3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 
 };
 
-int legalBox3[] = {
+/*int legalBox3[] = {
 	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
 	2, 2, 2, 2, 1, 1, 2, 2, 2, 2, 
 	4, 4, 3, 3, 3, 3, 3, 3, 4, 4, 
 };
-
+*/
 int legalBox4[] = {
 	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
 	2, 2, 2, 2, 1, 1, 2, 2, 2, 2, 
@@ -377,31 +383,18 @@ int printLayoutRaw(char layout[])
 	for (i = 0; i < ksize; ++i) {
 		charToPrintable(str, layout[i], TRUE);
 		
-		if (fullKeyboard == K_KINESIS) {
-			if (printable[i]) {
-				if (i % 12 == 11) printf("%s\n", str);
-				else if (i % 12 == 5) printf("%s  ", str);
-				else printf("%s ", str);
-			} else {
-				if (i % 12 == 11) printf(" \n");
-				else if (i % 12 == 5) printf("    ");
-				else printf("   ");
-			}
-		} else if (fullKeyboard == K_STANDARD) {
-			if (printable[i] == FALSE) {
-				if (i % 14 == 13) printf("   \n");
-				else printf("   ");
-			} else if (i % 14 == 13) printf("%s\n", str);
-			else if (i % 14 == 5) printf("%s  ", str);
-			else printf("%s ", str);
-		} else {
-			if (printable[i] == FALSE) {
-				if (i % 10 == 9) printf("  \n");
-				else printf("   ");
-			} else if (i % 10 == 9) printf("%s\n", str);
-			else if (i % 10 == 4) printf("%s  ", str);
-			else printf("%s ", str);
-		}
+        if (printable[i]) {
+            printf(" %s", str);
+        } else {
+            printf("   ");
+        }
+        if (i != ksize) {
+            if (hand[i] == RIGHT && hand[i+1] == LEFT) {
+                printf("\n");
+            } else if (i != ksize && hand[i] == LEFT && hand[i+1] == RIGHT) {
+                printf("    ");
+            }
+        }
 	}
 	printf("\n");
 	return 0;
@@ -439,19 +432,14 @@ int printPercentages(Keyboard *k)
 	printLayoutOnly(k);
 		
 	// Print all the fitness criteria.
-	printf("Fitness:       %ld\n",   k->fitness);
+	printf("Fitness:       %ld  Distance:      %ld  Finger work: %ld\n",   k->fitness, k->distance, k->fingerWork);
+    printf("Inward rolls:  %2.2f%%    Outward rolls: %2.2f%%\n", ((double)(100*k->inRoll    ) / totalDi ), ((double)(100*k->outRoll   ) / totalDi ));
+	printf("Same hand:     %2.2f%%    Same finger:   %2.2f%%\n", ((double)(100*k->sameHand  ) / totalDi ), ((double)(100*k->sameFinger) / totalDi ));
+	printf("Row change:    %2.2f%%    Home jump:     %2.2f%%     Ring jump:     %2.2f%%\n", ((double)(100*k->rowChange ) / totalDi ), ((double)(100*k->homeJump  ) / totalDi ), ((double)(100*k->ringJump  ) / totalDi ));
+	if (k->toCenter > 0)  printf("To center:     %2.2f%%  ", ((double)(100*k->toCenter  ) / totalDi ));
+	if (k->toOutside > 0) printf("To outside:    %2.2f%%  ", ((double)(100*k->toOutside) / totalDi ));
+    printf("\n");
 	if (keepQWERTY) printf("QWERTY positions: %d\n", qwertyPositions(k));
-	printf("Distance:      %ld\n",   (        (    k->distance  )           ));
-	printf("Finger work:   %ld\n",   (        (    k->fingerWork)           ));
-	printf("Inward rolls:  %.2f%%\n", ((double)(100*k->inRoll    ) / totalDi ));
-	printf("Outward rolls: %.2f%%\n", ((double)(100*k->outRoll   ) / totalDi ));
-	printf("Same hand:     %.2f%%\n", ((double)(100*k->sameHand  ) / totalDi ));
-	printf("Same finger:   %.2f%%\n", ((double)(100*k->sameFinger) / totalDi ));
-	printf("Row change:    %.2f%%\n", ((double)(100*k->rowChange ) / totalDi ));
-	printf("Home jump:     %.2f%%\n", ((double)(100*k->homeJump  ) / totalDi ));
-	printf("Ring jump:     %.2f%%\n", ((double)(100*k->ringJump  ) / totalDi ));
-	printf("To center:     %.2f%%\n", ((double)(100*k->toCenter  ) / totalDi ));
-	if (ksize != 30) printf("To outside:    %.2f%%\n", ((double)(100*k->toOutside) / totalDi ));
 	printf("\n");
 
 	return 0;
@@ -503,13 +491,15 @@ int isLegalSwap(Keyboard *k, int i, int j)
 	i %= ksize;
 	j %= ksize;
 	
-	if (fullKeyboard == K_NO) {
-		return legalBox[i] == legalBox[j];
+	if (fullKeyboard == K_NO || fullKeyboard == K_ADHD) {
+		return legalBox3[i] == legalBox3[j];
 	} else if (fullKeyboard == K_STANDARD) {
 		if (keepConsonantsRight) return bigLegalBoxConsonants[i] == bigLegalBoxConsonants[j];
 		else return bigLegalBox[i] == bigLegalBox[j];
 	} else if (fullKeyboard == K_KINESIS) {
 		return kinesisLegalBox[i] == kinesisLegalBox[j];
+	} else {
+		return legalBox[i] == legalBox[j];
 	}
 
 	return TRUE;
