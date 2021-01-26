@@ -93,6 +93,21 @@ int getCommands()
 			} else if (streq(cmd + str_len, "iphone")) {
 				setksize(K_IPHONE);
 				printf("Keyboard set to iPhone. All user-defined values have been reset.\n\n");
+			} else if (streq(cmd + str_len, "laptop")) {
+				setksize(K_LAPTOP);
+				printf("Keyboard set to Laptop. All user-defined values have been reset.\n\n");
+			} else if (streq(cmd + str_len, "not")) {
+				setksize(K_NOT);
+				printf("Keyboard set to non-full with single thumbs. All user-defined values have been reset.\n\n");
+			} else if (streq(cmd + str_len, "nott")) {
+				setksize(K_NOTT);
+				printf("Keyboard set to non-full with double thumbs. All user-defined values have been reset.\n\n");
+			} else if (streq(cmd + str_len, "crkbd")) {
+				setksize(K_CRKBD);
+				printf("Keyboard set to Corne Keyboard. All user-defined values have been reset.\n\n");
+			} else if (streq(cmd + str_len, "adhd")) {
+				setksize(K_ADHD);
+				printf("Keyboard set to Advanced Developers Hoptimized Dvorak. All user-defined values have been reset.\n\n");
 			} else {
 				printf("Undefined input. Valid inputs: \"setksize no\" (do not use full keyboard), \"setksize standard\" (use standard full keyboard), \"setksize kinesis\" (use Kinesis full keyboard).\n\n");
 			}
@@ -232,11 +247,11 @@ int game()
 		score[keynum % 2] += (k.fitness - prev_fitness) / divisor;
 		prev_fitness = k.fitness;
 		
-		printf("Player 1 score: %lld\n", score[p1]);
-		printf("Player 2 score: %lld\n\n", score[p2]);
+		printf("Player 1 score: %ld\n", score[p1]);
+		printf("Player 2 score: %ld\n\n", score[p2]);
 	}
 	
-	printf("Layout final fitness: %lld\n", k.fitness);
+	printf("Layout final fitness: %ld\n", k.fitness);
 	printLayoutOnly(&k);
 	printf("\n");
 	
@@ -286,25 +301,25 @@ int gameComputer(Keyboard *k, char difficulty)
 			++total;
 			switch (difficulty) {
 			case '0': 
-				if (total >=  2) done = TRUE; break;
+				if (total >=  2) {done = TRUE;} break;
 			case '1': 
-				if (total >=  5) done = TRUE; break;
+				if (total >=  5) {done = TRUE;} break;
 			case '2': 
-				if (total >= 12) done = TRUE; break;
+				if (total >= 12) {done = TRUE;} break;
 			case '3': 
-				if (total >= 20) done = TRUE; break;
+				if (total >= 20) {done = TRUE;} break;
 			case '4': 
-				if (total >= 30) done = TRUE; break;
+				if (total >= 30) {done = TRUE;} break;
 			case '5': 
-				if (total >= 45) done = TRUE; break;
+				if (total >= 45) {done = TRUE;} break;
 			case '6': 
-				if (total >= 65) done = TRUE; break;
+				if (total >= 65) {done = TRUE;} break;
 			case '7': 
-				if (total >= 90) done = TRUE; break;
+				if (total >= 90) {done = TRUE;} break;
 			case '8': 
-				if (total >=130) done = TRUE; break;
+				if (total >=130) {done = TRUE;} break;
 			case '9':
-				if (total >=200) done = TRUE; break;
+				if (total >=200) {done = TRUE;} break;
 			default: 
 				break;
 			}
@@ -404,7 +419,7 @@ int worstDigraphs(Keyboard *k, int damagingp)
 		charToPrintable(buf1, worst[i].key[0], FALSE);
 		charToPrintable(buf2, worst[i].key[1], FALSE);
 		
-		printf("%s%s = %lld\n", buf1, buf2, worst[i].value);
+		printf("%s%s = %ld\n", buf1, buf2, worst[i].value);
 		
 	}
 		

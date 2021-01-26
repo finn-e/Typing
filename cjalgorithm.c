@@ -244,8 +244,9 @@ void * greatToBestThreadRec(void *arg)
          */
         int64_t prevBest = threadArg->bestk.fitness;
         greatToBestBruteForce(&threadArg->bestk);
-        if (detailedOutput && threadArg->bestk.fitness < prevBest)
-            printf("\nFound with GTBBF(): %lld\n", threadArg->bestk.fitness);
+        if (detailedOutput && threadArg->bestk.fitness < prevBest) {
+            printf("\nFound with GTBBF(): %ldd\n", threadArg->bestk.fitness);
+        }
     }
     
     /* Use the standard greatToBest() algorithm. */

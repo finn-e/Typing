@@ -29,6 +29,13 @@
 #define K_STANDARD 1
 #define K_KINESIS 2
 #define K_IPHONE 3
+#define K_LAPTOP 4
+#define K_NOT 5
+#define K_NOTT 6
+#define K_CRKBD 7
+#define K_ADHD 8
+
+#define K_DEFAULT K_ADHD
 
 #define TRUE 1
 #define FALSE 0
@@ -99,7 +106,7 @@ int zCost, xCost, cCost, vCost, qwertyPosCost, qwertyFingerCost, qwertyHandCost,
 int distance, inRoll, outRoll, sameHand, sameFingerP, sameFingerR, sameFingerM, 
 	sameFingerI, sameFingerT, rowChangeDown, rowChangeUp, handWarp, handSmooth, 
 	homeJump, homeJumpIndex, doubleJump, ringJump, toCenter, toOutside, 
-	shiftCost, doubleShiftCost;
+	shiftCost, doubleShiftCost, sfmult, irmult;
 
 int initValues();
 void initCosts();

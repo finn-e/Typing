@@ -8,7 +8,7 @@
 CC = gcc
 
 # Compiler flags.
-CFLAGS = -std=c99 -Wall
+CFLAGS = -std=c99 -Wall -FCOMMON -zmuldefs
 
 # Flags used for debug mode.
 DEBUG_FLAGS = -g -O0 -fno-inline
