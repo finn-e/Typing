@@ -71,7 +71,7 @@ struct Digraph digraphs[DI_LEN_MAX];
 #define DEFAULT_KEYBOARD_NOTT "qcumk/dxfgpwetaozinjsrh y,.'bv\"lQCUMK-DXFGPWETAOZINJSRH Y:!?BV;L"
 #define DEFAULT_KEYBOARD_CRKBD "q``mkldxfgpwetaozinjsrh y,.'bcuv\"-)lQ``MKLDXFGPWETAOZINJSRH Y:!?BCUV;/)L"
 #define DEFAULT_KEYBOARD_ADHD " etaoinsrhldcumfgpwybvkq.,' ETAOINSRHLDCUMFGPWYBVKQ!?\""
-#define DEFAULT_KEYBOARD_TRAN " etaoinsrhldcumfpgw\nyb,.vk'xjqz\bETAOINSRHLDCUMFPLW\tyb?!VK\"xjqz"
+#define DEFAULT_KEYBOARD_TRAN "etaoinsrhldcumfpgw\nyb,.vk'xjqz ETAOINSRHLDCUMFPLW\tYB?!VK\"XJQZ\b"
 
 #define CHECK_FILE_FOR_NULL(file, filename) \
 	if ((file) == NULL) { \

@@ -584,9 +584,9 @@ void initKeyboardData()
 		copyArray(finger, fingerCopy, ksize);
 		
 		static int columnCopy[KSIZE_MAX] = {
-			0, 1, 2, 3, 4, 5, 4, 3, 2, 1, 0, -1,
-			0, 1, 2, 3, 4, 5, 4, 3, 2, 1, 0, -1,
-			0, 1, 2, 3, 4, 5, 4, 3, 2, 1, 0, -1
+			0, 1, 2, 3, 5, 5, 4, 3, 2, 1, 0, -1,
+			0, 1, 2, 3, 5, 5, 4, 3, 2, 1, 0, -1,
+			0, 1, 2, 3, 5, 5, 4, 3, 2, 1, 0, -1
 		};
 		copyArray(column, columnCopy, ksize);
 		
@@ -1151,7 +1151,7 @@ void setksize(int type)
         kbdFilename = NULL;
         break;
 	}
-
+ 
 	initData();
 	if (USE_COST_ARRAY)
 		preCalculateFitness();

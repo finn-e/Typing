@@ -166,7 +166,7 @@ void initCosts()
 	keepNumbers = 1;
 	keepBrackets = TRUE;
 	keepShiftPairs = FALSE;
-	keepTab = TRUE;
+	keepTab = FALSE;
 	keepConsonantsRight = FALSE;
 	keepNumbersShifted = FALSE;
 	
@@ -205,7 +205,7 @@ void initCosts()
 	 * on the index finger. The cost is 
      *     sameHand + rowChange + homeJump + homeJumpIndex.
      */
-    sfmult = 10;
+    sfmult = 3;
     irmult = 3;
     
 	distance =		  1;
