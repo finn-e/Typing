@@ -111,7 +111,7 @@ int initValues()
 		static int64_t costsCopy[KSIZE_MAX] = {
 			 40,  40,  30,  40,  80,  20,  20,  80,  40,  30,  40,  60, 
 			  0,   0,   0,   0,  50,   0,   0,  50,   0,   0,   0,   0, 
-			 90,  70,  40,  30,  90, 999, 999,  90,  30,  40,  70,  90, 
+			 90,  70,  40,  30,  60, 999, 999,  60,  30,  40,  70,  90, 
 		};
 	
 		for (i = 0; i < ksize; ++i)
@@ -123,6 +123,19 @@ int initValues()
 		static int64_t costsCopy[KSIZE_MAX] = {
 			 40,  40,  30,  40,  20,  20,  40,  30,  40,  60, 
 			  0,   0,   0,   0,   0,   0,   0,   0,   0,   0, 
+			 90,  70,  40,  30, 999, 999,  30,  40,  70,  90, 
+        };
+	
+		for (i = 0; i < ksize; ++i)
+			distanceCosts[i] = costsCopy[i];
+        
+    } else if (fullKeyboard == K_TRAN) {
+		// Set keyboard position costs. These costs were determined by looking 
+		// at how the positions were valued on some of the best alternative 
+		// layouts.
+		static int64_t costsCopy[KSIZE_MAX] = {
+			 40,  40,  30,  40,  20,  20,  90,  40,  30,  40,  60, 110,
+			  0,   0,   0,   0,   0,   0,  70,   0,   0,   0,   0, 90,
 			 90,  70,  40,  30, 999, 999,  30,  40,  70,  90, 
 		};
 	

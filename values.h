@@ -34,8 +34,9 @@
 #define K_NOTT 6
 #define K_CRKBD 7
 #define K_ADHD 8
+#define K_TRAN 9
 
-#define K_DEFAULT K_ADHD
+#define K_DEFAULT K_TRAN
 
 #define TRUE 1
 #define FALSE 0
