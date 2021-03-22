@@ -2,8 +2,12 @@
 // You can also put comments on the same line as a layout after you've typed in the layout.
 //
 ypoujkdlcwinea,mhtsrqz/.:bfgvxYPOUJKDLCWINEA;MHTSRQZ<>?BFGVX MTGAP 3.14
-//,fhdkjcul.oantgmseriqxbpzyw'v;<FHDKJCUL>OANTGMSERIQXBPZYW"V: MTGAP 2.0
+,fhdkjcul.oantgmseriqxbpzyw/v;<FHDKJCUL>OANTGMSERIQXBPZYW?V: MTGAP 2.0
 qwfpgjluy;arstdhneiozxcvbkm,./QWFPGJLUY:ARSTDHNEIOZXCVBKM<>? Colemak
 qdrwbjfup;ashtgyneoizxmcvkl,./QDRWBJFUP:ASHTGYNEOIZXMCVKL<>? Workman
-//',.pyfgcrlaoeuidhtns;qjkxbmwvz"<>PYFGCRLAOEUIDHTNS:QJKXBMWVZ Dvorak
-//qwertyuiopasdfghjkl;zxcvbnm,./QWERTYUIOPASDFGHJKL:ZXCVBNM<>? QWERTY
+/,.pyfgcrlaoeuidhtns;qjkxbmwvz?<>PYFGCRLAOEUIDHTNS:QJKXBMWVZ Dvorak
+qwertyuiopasdfghjkl;zxcvbnm,./QWERTYUIOPASDFGHJKL:ZXCVBNM<>? QWERTY
+plum/;cfgqreadonthiskjvb,.wxyzPLUM?:CFGQREADONTHISKJVB<>WXYZ
+//xyouvfldncaie \nmhtsrk,\tgzqjpbwXYOUVFLDNCAIE \nMHTSRK?\tGZQJPBW aieyou
+//qyoujfldncaie \nmhtsrzx\tvkbgpw,QYOUJFLDNCAIE \nMHTSRZX\tVKBGPW? aieyou2
+

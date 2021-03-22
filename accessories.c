@@ -8,6 +8,8 @@
 
 #include "accessories.h"
 
+char* res;
+
 int getCommands()
 {
 	printf("Welcome to the Keyboard Layout Optimizer. If you have questions or comments, contact Michael Dickens by email (mdickens93@gmail.com) or leave a comment at http://mathematicalmulticore.wordpress.com/category/keyboards/.\n");
@@ -18,7 +20,7 @@ int getCommands()
 
 	do {
 		printf(">>> ");
-		fgets(cmd, length, stdin);
+		res = fgets(cmd, length, stdin);
 
 		cmd[strlen(cmd)-1] = '\0'; // Remove the newline.
 
@@ -84,6 +86,9 @@ int getCommands()
 			if (streq(cmd + str_len, "no")) {
 				setksize(K_NO);
 				printf("Keyboard set to non-full. All user-defined values have been reset.\n\n");
+			} else if (streq(cmd + str_len, "not")) {
+				setksize(K_NOT);
+				printf("Keyboard set to non-full w/ thumb. All user-defined values have been reset.\n\n");
 			} else if (streq(cmd + str_len, "standard")) {
 				setksize(K_STANDARD);
 				printf("Keyboard set to full standard. All user-defined values have been reset.\n\n");
@@ -93,6 +98,60 @@ int getCommands()
 			} else if (streq(cmd + str_len, "iphone")) {
 				setksize(K_IPHONE);
 				printf("Keyboard set to iPhone. All user-defined values have been reset.\n\n");
+			} else if (streq(cmd + str_len, "trim")) {
+				setksize(K_TRIM);
+				printf("Keyboard set to Trim. All user-defined values have been reset.\n\n");
+			} else if (streq(cmd + str_len, "gigi")) {
+				setksize(K_GIGI);
+				printf("Keyboard set to GiGi. All user-defined values have been reset.\n\n");
+			} else if (streq(cmd + str_len, "georgi")) {
+				setksize(K_GEORGI);
+				printf("Keyboard set to Georgi. All user-defined values have been reset.\n\n");
+			} else if (streq(cmd + str_len, "mini")) {
+				setksize(K_MINI);
+				printf("Keyboard set to Mini. All user-defined values have been reset.\n\n");
+			} else if (streq(cmd + str_len, "add")) {
+				setksize(K_ADD);
+				printf("Keyboard set to ADD. All user-defined values have been reset.\n\n");
+			} else if (streq(cmd + str_len, "badhd")) {
+				setksize(K_BADHD);
+				printf("Keyboard set to BADHD. All user-defined values have been reset.\n\n");
+			} else if (streq(cmd + str_len, "laptop")) {
+				setksize(K_LAPTOP);
+				printf("Keyboard set to Laptop. All user-defined values have been reset.\n\n");
+			} else if (streq(cmd + str_len, "gibo")) {
+				setksize(K_GIBO);
+				printf("Keyboard set to GiBo. All user-defined values have been reset.\n\n");
+			} else if (streq(cmd + str_len, "hocus")) {
+				setksize(K_HOCUS);
+				printf("Keyboard set to Hocus. All user-defined values have been reset.\n\n");
+			} else if (streq(cmd + str_len, "homu")) {
+				setksize(K_HOMU);
+				printf("Keyboard set to Homunculus. All user-defined values have been reset.\n\n");
+			} else if (streq(cmd + str_len, "noki")) {
+				setksize(K_NOKI);
+				printf("Keyboard set to NoKi. All user-defined values have been reset.\n\n");
+			} else if (streq(cmd + str_len, "runner")) {
+				setksize(K_RUNNER);
+				printf("Keyboard set to Runner. All user-defined values have been reset.\n\n");
+			} else if (streq(cmd + str_len, "snotdog")) {
+				setksize(K_SNOTDOG);
+				printf("Keyboard set to Snotdog. All user-defined values have been reset.\n\n");
+			} else if (streq(cmd + str_len, "twentyseven")) {
+				setksize(K_TWENTYSEVEN);
+				printf("Keyboard set to twentyseven. All user-defined values have been reset.\n\n");
+			} else if (streq(cmd + str_len, "eleven")) {
+				setksize(K_ELEVEN);
+				printf("Keyboard set to eleven. All user-defined values have been reset.\n\n");
+			} else if (streq(cmd + str_len, "eighteen")) {
+				setksize(K_EIGHTEEN);
+				printf("Keyboard set to Eighteen. All user-defined values have been reset.\n\n");
+			} else if (streq(cmd + str_len, "nineteen")) {
+				setksize(K_NINETEEN);
+				printf("Keyboard set to Nineteen. All user-defined values have been reset.\n\n");
+			} else if (streq(cmd + str_len, "godot")) {
+				setksize(K_GODOT);
+				printf("Keyboard set to Godot. All user-defined values have been reset.\n\n");
 			} else {
 				printf("Undefined input. Valid inputs: \"setksize no\" (do not use full keyboard), \"setksize standard\" (use standard full keyboard), \"setksize kinesis\" (use Kinesis full keyboard).\n\n");
 			}
@@ -158,13 +217,13 @@ int game()
 	
 	do {
 		printf("Play against a human or the computer? (h/c) ");
-		fgets(input, 999, stdin);
+		res = fgets(input, 999, stdin);
 		if (input[0] == 'h') {
 			p2_computer = FALSE;
 			printf("Human it is.\n\n");
 		} else {
 			printf("Computer it is. Select a difficulty level (a number from 0 to 9): ");
-			fgets(input, 999, stdin);
+			res = fgets(input, 999, stdin);
 			difficulty = input[0];
 			if (difficulty >= '0' && difficulty <= '4')
 				printf("Difficulty set to %c. Good luck!\n\n", difficulty);
@@ -203,7 +262,7 @@ int game()
 		} else {
 		
 			printf("Player %d, type in a character and a position: ", keynum % 2 + 1);
-			fgets(input, 999, stdin);
+			res = fgets(input, 999, stdin);
 			if (strlen(input) < 3) {
 				printf("Invalid input. Please try again.\n");
 				--keynum;
@@ -232,11 +291,11 @@ int game()
 		score[keynum % 2] += (k.fitness - prev_fitness) / divisor;
 		prev_fitness = k.fitness;
 		
-		printf("Player 1 score: %lld\n", score[p1]);
-		printf("Player 2 score: %lld\n\n", score[p2]);
+		printf("Player 1 score: %ld\n", score[p1]);
+		printf("Player 2 score: %ld\n\n", score[p2]);
 	}
 	
-	printf("Layout final fitness: %lld\n", k.fitness);
+	printf("Layout final fitness: %ld\n", k.fitness);
 	printLayoutOnly(&k);
 	printf("\n");
 	
@@ -286,25 +345,25 @@ int gameComputer(Keyboard *k, char difficulty)
 			++total;
 			switch (difficulty) {
 			case '0': 
-				if (total >=  2) done = TRUE; break;
+				if (total >=  2) {done = TRUE;} break;
 			case '1': 
-				if (total >=  5) done = TRUE; break;
+				if (total >=  5) {done = TRUE;} break;
 			case '2': 
-				if (total >= 12) done = TRUE; break;
+				if (total >= 12) {done = TRUE;} break;
 			case '3': 
-				if (total >= 20) done = TRUE; break;
+				if (total >= 20) {done = TRUE;} break;
 			case '4': 
-				if (total >= 30) done = TRUE; break;
+				if (total >= 30) {done = TRUE;} break;
 			case '5': 
-				if (total >= 45) done = TRUE; break;
+				if (total >= 45) {done = TRUE;} break;
 			case '6': 
-				if (total >= 65) done = TRUE; break;
+				if (total >= 65) {done = TRUE;} break;
 			case '7': 
-				if (total >= 90) done = TRUE; break;
+				if (total >= 90) {done = TRUE;} break;
 			case '8': 
-				if (total >=130) done = TRUE; break;
+				if (total >=130) {done = TRUE;} break;
 			case '9':
-				if (total >=200) done = TRUE; break;
+				if (total >=200) {done = TRUE;} break;
 			default: 
 				break;
 			}
@@ -404,7 +463,7 @@ int worstDigraphs(Keyboard *k, int damagingp)
 		charToPrintable(buf1, worst[i].key[0], FALSE);
 		charToPrintable(buf2, worst[i].key[1], FALSE);
 		
-		printf("%s%s = %lld\n", buf1, buf2, worst[i].value);
+		printf("%s%s = %ld\n", buf1, buf2, worst[i].value);
 		
 	}
 		
@@ -444,7 +503,7 @@ int compare(const char *const filename)
 
 
 /* 
- * Improves each layout in the given file to the maximum extent possible.
+ * Improves each layout in the given file to the maximum extwentysevent possible.
  */
 int improveFromFile(const char *const filename)
 {
@@ -463,7 +522,7 @@ int improveFromFile(const char *const filename)
 }
 
 /*
- * Improves k to the maximum extent possible.
+ * Improves k to the maximum extwentysevent possible.
  */
 Keyboard improver(Keyboard k)
 {
@@ -526,7 +585,7 @@ int makeTypingData()
 	char input[100];
 	
 	printf("Use default multipliers? (y/n) ");
-	fgets(input, 100, stdin);
+	res = fgets(input, 100, stdin);
 	
 	if (input[0] == 'y' || input[0] == 'Y') {
 		multipliers[0] = 18;

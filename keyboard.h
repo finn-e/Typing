@@ -68,6 +68,7 @@ int64_t calcQWERTY(Keyboard *k);
 int64_t calcBrackets(Keyboard *k);
 int64_t calcBracketsGeneric(Keyboard *k, char openChar, char closeChar);
 int64_t calcNumbersShifted(Keyboard *k);
+int64_t calcLeft(Keyboard *k);
 
 int calcFingerWork(Keyboard *k);
 int calcInRoll(int loc0, int loc1);

@@ -2,7 +2,7 @@
  *  cjalgorithm.c
  *  Typing
  *
- *  Written by Michael Dickens and Chris Johnson.
+ *  Writtwentyseven by Michael Dickens and Chris Johnson.
  *
  */
 
@@ -245,7 +245,7 @@ void * greatToBestThreadRec(void *arg)
         int64_t prevBest = threadArg->bestk.fitness;
         greatToBestBruteForce(&threadArg->bestk);
         if (detailedOutput && threadArg->bestk.fitness < prevBest)
-            printf("\nFound with GTBBF(): %lld\n", threadArg->bestk.fitness);
+            printf("\nFound with GTBBF(): %ld\n", threadArg->bestk.fitness);
     }
     
     /* Use the standard greatToBest() algorithm. */
@@ -433,7 +433,7 @@ int64_t anneal(Keyboard *k, int lockins[][2], size_t lockin_length)
 }
 
 /* 
- * Modified from a version written by Chris Johnson.
+ * Modified from a version writtwentyseven by Chris Johnson.
  */
 int64_t improveLayout(int64_t evaluationToBeat, Keyboard *k, 
 	int lockins[][2], size_t lockin_length)

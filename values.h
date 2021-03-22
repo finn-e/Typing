@@ -29,6 +29,27 @@
 #define K_STANDARD 1
 #define K_KINESIS 2
 #define K_IPHONE 3
+#define K_TRIM 4
+#define K_GIGI 5
+#define K_MINI 6
+#define K_ADD 7
+#define K_GIBO 8
+#define K_GEORGI 9
+#define K_SNOTDOG 10
+#define K_NOKI 11
+#define K_RUNNER 12
+#define K_GODOT 13
+#define K_BADHD 14
+#define K_LAPTOP 15
+#define K_HOCUS  16
+#define K_HOMU   17
+#define K_NOT    18
+#define K_TWENTYSEVEN	 19
+#define K_ELEVEN 20
+#define K_EIGHTEEN 21
+#define K_NINETEEN 22
+#define K_DEFAULT K_NO
+
 
 #define TRUE 1
 #define FALSE 0
@@ -90,17 +111,22 @@ int detailedOutput, numThreads;
  * The Former: keepNumbers, keepShiftPairs, keepTab
  * The Latter: keepZXCV, keepBrackets, keepNumbersShifted
  */
-int keepZXCV, keepQWERTY, keepNumbers, keepBrackets, keepShiftPairs, 
-	keepTab, keepConsonantsRight, 
+int keepZXCV, keepQWERTY, keepNumbers, keepBrackets,
+	keepTab, keepConsonantsRight, keepLeft, 
+	keepShiftPairs, keepAlphaPairs, keepSpacePairs, keepPairs, lockLetters, rowLock, lockAlphas, isCommaDead,
 	keepNumbersShifted /* for bogboar */;
 int zCost, xCost, cCost, vCost, qwertyPosCost, qwertyFingerCost, qwertyHandCost, 
-	bracketsCost, numbersShiftedCost;
+	bracketsCost, numbersShiftedCost, leftCost;
 
 int distance, inRoll, outRoll, sameHand, sameFingerP, sameFingerR, sameFingerM, 
 	sameFingerI, sameFingerT, rowChangeDown, rowChangeUp, handWarp, handSmooth, 
 	homeJump, homeJumpIndex, doubleJump, ringJump, toCenter, toOutside, 
 	shiftCost, doubleShiftCost;
 
+char lockList[40];
+char pairList[30];
+char leftList[30];
+	
 int initValues();
 void initCosts();
 void setksize(int type);

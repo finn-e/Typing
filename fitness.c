@@ -150,6 +150,7 @@ int calcFitness(Keyboard *k)
 	if (keepZXCV) k->fitness += calcShortcuts(k);
 	if (keepQWERTY) k->fitness += calcQWERTY(k);
 	if (keepBrackets) k->fitness += calcBrackets(k);
+	if (keepLeft) k->fitness += calcLeft(k);
 	if (keepNumbersShifted) k->fitness += calcNumbersShifted(k);
 
 	return 0;
@@ -251,7 +252,7 @@ inline int64_t calcBracketsGeneric(Keyboard *k, char openChar, char closeChar)
 	 */
 	if (openShifted == closeShifted && 
 			((openPar+1 == closePar && row[openPar] == row[closePar]) ||
-			(hand[openPar] == LEFT && hand[closePar] == RIGHT && 
+			(((hand[openPar] == LEFT && hand[closePar] == RIGHT) || (hand[openPar] == RIGHT && hand[closePar] == LEFT)) && 
 			column[openPar] == column[closePar] && 
 			row[openPar] == row[closePar])))
 		return 0;
@@ -268,6 +269,17 @@ inline int64_t calcNumbersShifted(Keyboard *k)
 			score += numbersShiftedCost;
 	
 	return score;
+}
+
+inline int64_t calcLeft(Keyboard *k)
+{
+  int64_t test = 0; 
+	for (int i = 0; i < strlen(leftList); i++) {
+	  if (hand[locIgnoreShifted(k, leftList[i])] == RIGHT) {
+	      test = leftCost;
+	    }
+	}
+	return test;
 }
 
 /* Requires that k->fingerUsage has been calculated. */
@@ -401,7 +413,7 @@ inline int calcToCenter(int loc0, int loc1)
 	else return 0;
 }
 
-/* Only applies for the extended keyboard.
+/* Only applies for the extwentysevended keyboard.
  */
 inline int calcToOutside(int loc0, int loc1)
 {

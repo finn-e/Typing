@@ -129,6 +129,7 @@ int initKeyboard(Keyboard *k)
 		}
 	}
     
+/* removed because doesn't work for 90% of keyboards.
 	if (keepTab) {
 		int tabLoc = locWithShifted(k, '\t');
 		if (tabLoc >= 0) {
@@ -136,6 +137,7 @@ int initKeyboard(Keyboard *k)
 			swap(k, tabLoc, expectedTabLoc);
 		}		
 	}
+*/
 	
 	if (keepConsonantsRight && fullKeyboard == K_STANDARD) {
 		const char *consonants = "bcdfghjklmnpqrstvwxyz";
@@ -376,33 +378,25 @@ int printLayoutRaw(char layout[])
 	
 	for (i = 0; i < ksize; ++i) {
 		charToPrintable(str, layout[i], TRUE);
-		
-		if (fullKeyboard == K_KINESIS) {
-			if (printable[i]) {
-				if (i % 12 == 11) printf("%s\n", str);
-				else if (i % 12 == 5) printf("%s  ", str);
-				else printf("%s ", str);
-			} else {
-				if (i % 12 == 11) printf(" \n");
-				else if (i % 12 == 5) printf("    ");
-				else printf("   ");
-			}
-		} else if (fullKeyboard == K_STANDARD) {
-			if (printable[i] == FALSE) {
-				if (i % 14 == 13) printf("   \n");
-				else printf("   ");
-			} else if (i % 14 == 13) printf("%s\n", str);
-			else if (i % 14 == 5) printf("%s  ", str);
-			else printf("%s ", str);
-		} else {
-			if (printable[i] == FALSE) {
-				if (i % 10 == 9) printf("  \n");
-				else printf("   ");
-			} else if (i % 10 == 9) printf("%s\n", str);
-			else if (i % 10 == 4) printf("%s  ", str);
-			else printf("%s ", str);
-		}
-	}
+//      sprintf(str, "%d", isAlpha[i]);
+    if (printable[i] == FALSE) {
+      if ( hand[i] == RIGHT && hand[i+1] == LEFT) { 
+        printf ("  \n");
+      } else if ( hand[i] == LEFT && hand[i+1] == RIGHT) {
+        printf("      ");
+      } else {
+        printf("   ");
+      }
+    } else {
+      if ( hand[i] == RIGHT && hand[i+1] == LEFT) { 
+        printf ("%s\n", str);
+      } else if ( hand[i] == LEFT && hand[i+1] == RIGHT) {
+        printf("%s    ", str);
+      } else {
+        printf("%s ", str);
+      }
+    }
+  }
 	printf("\n");
 	return 0;
 }
@@ -419,9 +413,9 @@ int printPercentages(Keyboard *k)
 
 	// Hand
 	printf("\nHands: ");
-	printf("%lld%% ", 100 * (k->fingerUsage[0] + k->fingerUsage[1] + 
+	printf("%ld%% ", 100 * (k->fingerUsage[0] + k->fingerUsage[1] + 
 			k->fingerUsage[2] + k->fingerUsage[3] + k->fingerUsage[4]) / total);
-	printf("%lld%%\n", 100 * (k->fingerUsage[5] + 
+	printf("%ld%%\n", 100 * (k->fingerUsage[5] + 
 			k->fingerUsage[6] + k->fingerUsage[7] + k->fingerUsage[8]
 			 + k->fingerUsage[9]) / total);
 
@@ -433,25 +427,18 @@ int printPercentages(Keyboard *k)
 		else if (usage < 10) printf("%.1f%% ", usage);
 		else printf("%.0f%% ", usage);
 	}
-	printf("\n\n");
+	printf("\n");
 	
 	// Print the keyboard layout.
 	printLayoutOnly(k);
 		
 	// Print all the fitness criteria.
-	printf("Fitness:       %lld\n",   k->fitness);
+	printf("Fitness:  %10ld    Distance:  %10ld   Finger work: %5ld\n", k->fitness, k->distance, k->fingerWork);
+    printf("Inward rolls: %5.2f%%    Outward rolls: %5.2f%%\n",(double)k->inRoll * 100 / totalDi, (double)k->outRoll * 100 / totalDi);
+    printf("Same hand:    %5.2f%%    Same finger:   %5.2f%%\n", (double)k->sameHand * 100 / totalDi, (double)k->sameFinger * 100 / totalDi);
+    printf("Row change:   %5.2f%%    Home jump:     %5.2f%%   Ring jump:  %5.2f%%\n", (double)k->rowChange * 100 / totalDi, (double)k->homeJump * 100 / totalDi, (double)k->ringJump * 100 / totalDi);
+    printf("To center:    %5.2f%%    To outside:    %5.2f%%\n", (double)k->toCenter * 100 / totalDi, (double)k->toOutside * 100 / totalDi);
 	if (keepQWERTY) printf("QWERTY positions: %d\n", qwertyPositions(k));
-	printf("Distance:      %lld\n",   (        (    k->distance  )           ));
-	printf("Finger work:   %lld\n",   (        (    k->fingerWork)           ));
-	printf("Inward rolls:  %.2f%%\n", ((double)(100*k->inRoll    ) / totalDi ));
-	printf("Outward rolls: %.2f%%\n", ((double)(100*k->outRoll   ) / totalDi ));
-	printf("Same hand:     %.2f%%\n", ((double)(100*k->sameHand  ) / totalDi ));
-	printf("Same finger:   %.2f%%\n", ((double)(100*k->sameFinger) / totalDi ));
-	printf("Row change:    %.2f%%\n", ((double)(100*k->rowChange ) / totalDi ));
-	printf("Home jump:     %.2f%%\n", ((double)(100*k->homeJump  ) / totalDi ));
-	printf("Ring jump:     %.2f%%\n", ((double)(100*k->ringJump  ) / totalDi ));
-	printf("To center:     %.2f%%\n", ((double)(100*k->toCenter  ) / totalDi ));
-	if (ksize != 30) printf("To outside:    %.2f%%\n", ((double)(100*k->toOutside) / totalDi ));
 	printf("\n");
 
 	return 0;
@@ -480,6 +467,10 @@ int isSwappable(char c)
 
 int isLegalSwap(Keyboard *k, int i, int j)
 {
+  if (isCommaDead == TRUE && (charAt(k, i) == ',' || charAt(k, j) == ',') && (isAlpha[i] != isAlpha[j])) {
+    return FALSE;
+  }
+
 	if (i < 0 || j < 0 || i >= 2 * ksize || j >= 2 * ksize)
 		return FALSE;
 	
@@ -498,8 +489,30 @@ int isLegalSwap(Keyboard *k, int i, int j)
 	}
 	
 	if (keepTab && (charAt(k, i) == '\t' || charAt(k, j) == '\t'))
-		return FALSE;
-		
+	    return FALSE;
+	
+	if (((charAt(k, i) == '\t') && (j >= ksize)) || ((charAt(k,j) == '\t') && (i >= ksize)))
+	    return FALSE;
+	
+	if (lockLetters) {
+        for (int l = 0; l < strlen(lockList); l++) {
+    	    if (charAt(k, i) == lockList[l] || charAt(k, j) == lockList[l])
+    	        return FALSE;
+    	}
+    }
+    
+    if (rowLock) {
+        if (row[i % ksize] != row[j % ksize]) {
+            return FALSE;
+        }
+    }	
+    
+    if (lockAlphas) {
+        if (isAlpha[i % ksize] != isAlpha[j % ksize]) {
+            return FALSE;
+        }
+    }
+    	
 	i %= ksize;
 	j %= ksize;
 	
